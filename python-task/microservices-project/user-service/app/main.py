@@ -2,6 +2,7 @@ from fastapi import FastAPI, Depends, HTTPException, status
 from sqlalchemy.ext.asyncio import AsyncSession
 from typing import List
 import logging
+from sqlalchemy.future import select
 
 from . import crud, models, schemas, auth
 from .database import engine, get_db
@@ -77,10 +78,12 @@ async def login(user_credentials: schemas.UserLogin, db: AsyncSession = Depends(
             detail="Internal server error"
         )
 
-@app.get("/users/me", response_model=schemas.UserResponse)
-async def get_current_user_info(current_user: models.User = Depends(auth.get_current_user)):
-    """Get current user information"""
-    return current_user
+@app.get("/users", response_model=List[schemas.UserResponse])
+async def list_users(db: AsyncSession = Depends(get_db)):
+    """Get all registered users"""
+    result = await db.execute(select(models.User))
+    return result.scalars().all()
+
 
 @app.get("/health")
 async def health_check():

@@ -39,3 +39,6 @@ class TaskResponse(TaskBase):
     
     class Config:
         from_attributes = True
+        
+class TaskDeleteResponse(BaseModel):
+    message: str

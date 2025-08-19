@@ -30,6 +30,7 @@ services:
   user-service:
     build:
       context: ./user-service
+    image: user-service:latest
     env_file:
       - ./user-service/.env
     depends_on:
@@ -42,6 +43,7 @@ services:
   task-service:
     build:
       context: ./task-service
+    image: task-service:latest
     env_file:
       - ./task-service/.env
     depends_on:
@@ -54,6 +56,7 @@ services:
   gateway-service:
     build:
       context: ./gateway-service
+    image: gateway-service:latest
     env_file:
       - ./gateway-service/.env
     depends_on:
@@ -77,4 +80,3 @@ services:
  
 networks:
   backend:
- 

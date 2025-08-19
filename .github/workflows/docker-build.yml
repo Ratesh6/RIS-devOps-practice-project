@@ -26,22 +26,22 @@ jobs:
 
       - name: Build services via docker compose
         working-directory: python-task/microservices-project
-        run: docker compose build user-service task-service gateway-service
+        run: docker compose build
 
       - name: Push user-service
         working-directory: python-task/microservices-project
         run: |
-          docker tag user-service ${{ secrets.DOCKERHUB_USERNAME }}/user-service:latest
+          docker tag user-service:latest ${{ secrets.DOCKERHUB_USERNAME }}/user-service:latest
           docker push ${{ secrets.DOCKERHUB_USERNAME }}/user-service:latest
 
       - name: Push task-service
         working-directory: python-task/microservices-project
         run: |
-          docker tag task-service ${{ secrets.DOCKERHUB_USERNAME }}/task-service:latest
+          docker tag task-service:latest ${{ secrets.DOCKERHUB_USERNAME }}/task-service:latest
           docker push ${{ secrets.DOCKERHUB_USERNAME }}/task-service:latest
 
       - name: Push gateway-service
         working-directory: python-task/microservices-project
         run: |
-          docker tag gateway-service ${{ secrets.DOCKERHUB_USERNAME }}/gateway-service:latest
+          docker tag gateway-service:latest ${{ secrets.DOCKERHUB_USERNAME }}/gateway-service:latest
           docker push ${{ secrets.DOCKERHUB_USERNAME }}/gateway-service:latest

@@ -19,9 +19,14 @@ jobs:
           username: ${{ secrets.DOCKERHUB_USERNAME }}
           password: ${{ secrets.DOCKERHUB_TOKEN }}
 
-      - name: Build services via docker-compose
+      - name: Check Docker and Docker Compose versions
+        run: |
+          docker --version
+          docker compose version
+
+      - name: Build services via docker compose
         working-directory: python-task/microservices-project
-        run: docker-compose build user-service task-service gateway-service
+        run: docker compose build user-service task-service gateway-service
 
       - name: Push user-service
         working-directory: python-task/microservices-project

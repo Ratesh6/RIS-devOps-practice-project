@@ -1,5 +1,3 @@
-version: '3.9'
- 
 services:
   user-db:
     image: postgres:14
@@ -13,7 +11,7 @@ services:
       - "5432:5432"
     networks:
       - backend
- 
+
   task-db:
     image: postgres:14
     environment:
@@ -26,39 +24,39 @@ services:
       - "5433:5432"
     networks:
       - backend
- 
+
   user-service:
     build:
       context: ./user-service
-    image: user-service:latest
-    env_file:
-      - ./user-service/.env
+    # Uncomment if you have a .env file here
+    # env_file:
+    #   - ./user-service/.env
     depends_on:
       - user-db
     ports:
       - "8000:8000"
     networks:
       - backend
- 
+
   task-service:
     build:
       context: ./task-service
-    image: task-service:latest
-    env_file:
-      - ./task-service/.env
+    # Uncomment if you have a .env file here
+    # env_file:
+    #   - ./task-service/.env
     depends_on:
       - task-db
     ports:
       - "8001:8001"
     networks:
       - backend
- 
+
   gateway-service:
     build:
       context: ./gateway-service
-    image: gateway-service:latest
-    env_file:
-      - ./gateway-service/.env
+    # Uncomment if you have a .env file here
+    # env_file:
+    #   - ./gateway-service/.env
     depends_on:
       - user-service
       - task-service
@@ -66,7 +64,7 @@ services:
       - "8002:8002"
     networks:
       - backend
- 
+
   nginx:
     image: nginx:latest
     ports:
@@ -77,6 +75,6 @@ services:
       - gateway-service
     networks:
       - backend
- 
+
 networks:
   backend:

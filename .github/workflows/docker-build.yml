@@ -25,7 +25,35 @@ jobs:
         run: docker build -t microservices-project-user-service ./user-service
 
       - name: Build task-service image
-        run: docker build -t microservices-project-task-service ./task-service
+        run: docker build -t microservices-project-task-service -f ./task-service/Dockerfile ./task-service
+
+
+
+      - name: Tag & push gateway-service image
+        run: |
+          docker tag microservices-project-gateway-service:latest rateshk6/gateway-service:latest
+          docker push rateshk6/gateway-service:latest
+
+
+      - name: Tag & push user-service image
+        run: |
+          docker tag microservices-project-user-service:latest rateshk6/user-service:latest
+          docker push rateshk6/user-service:latest
+      
+      - name: Tag & push task-service image
+        run: |
+          docker tag microservices-project-task-service:latest rateshk6/task-service:latest
+          docker push rateshk6/task-service:latest
+
+
+
+
+
+
+
+
+
+
 
       - name: Tag & push gateway-service image
         run: |

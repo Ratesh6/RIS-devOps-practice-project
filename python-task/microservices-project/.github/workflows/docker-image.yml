@@ -22,21 +22,21 @@ jobs:
 
       - name: Build and Push user-service
         run: |
-          docker build ./user-service \
-            --file ./user-service/Dockerfile \
+          docker build -f python-task/microservices-project/user-service/Dockerfile \
+            python-task/microservices-project/user-service \
             --tag ${{ secrets.DOCKER_USERNAME }}/user-service:latest
           docker push ${{ secrets.DOCKER_USERNAME }}/user-service:latest
 
       - name: Build and Push task-service
         run: |
-          docker build ./task-service \
-            --file ./task-service/Dockerfile \
+          docker build -f python-task/microservices-project/task-service/Dockerfile \
+            python-task/microservices-project/task-service \
             --tag ${{ secrets.DOCKER_USERNAME }}/task-service:latest
           docker push ${{ secrets.DOCKER_USERNAME }}/task-service:latest
 
       - name: Build and Push gateway-service
         run: |
-          docker build ./gateway-service \
-            --file ./gateway-service/Dockerfile \
+          docker build -f python-task/microservices-project/gateway-service/Dockerfile \
+            python-task/microservices-project/gateway-service \
             --tag ${{ secrets.DOCKER_USERNAME }}/gateway-service:latest
           docker push ${{ secrets.DOCKER_USERNAME }}/gateway-service:latest

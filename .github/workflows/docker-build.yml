@@ -10,8 +10,7 @@ jobs:
     runs-on: ubuntu-latest
 
     steps:
-      - uses: actions/checkout@v4
-       
+      - uses: actions/checkout@v4   # no submodules needed
 
       - name: Log in to DockerHub
         uses: docker/login-action@v2

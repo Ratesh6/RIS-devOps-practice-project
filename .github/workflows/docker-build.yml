@@ -10,7 +10,8 @@ jobs:
     runs-on: ubuntu-latest
 
     steps:
-      - uses: actions/checkout@v4   # no submodules needed
+      # checkout your repo (no submodules now, so no special flags)
+      - uses: actions/checkout@v4
 
       - name: Log in to DockerHub
         uses: docker/login-action@v2
@@ -18,6 +19,7 @@ jobs:
           username: ${{ secrets.DOCKERHUB_USERNAME }}
           password: ${{ secrets.DOCKERHUB_TOKEN }}
 
+      # --- Build images ---
       - name: Build gateway-service image
         run: docker build -t microservices-project-gateway-service ./gateway-service
 
@@ -25,8 +27,9 @@ jobs:
         run: docker build -t microservices-project-user-service ./user-service
 
       - name: Build task-service image
-        run: docker build -t microservices-project-task-service -f task-service/Dockerfile task-service
+        run: docker build -t microservices-project-task-service ./task-service
 
+      # --- Push images ---
       - name: Push gateway-service
         run: |
           docker tag microservices-project-gateway-service:latest rateshk6/gateway-service:latest

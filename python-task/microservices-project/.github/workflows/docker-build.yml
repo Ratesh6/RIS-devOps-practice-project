@@ -3,34 +3,40 @@ name: Build and Push Services
 on:
   push:
     branches: [ main ]
+  workflow_dispatch:
 
 jobs:
   build-and-push:
     runs-on: ubuntu-latest
 
     steps:
-      - uses: actions/checkout@v4
+      - name: Checkout repository
+        uses: actions/checkout@v4
 
-      - name: Log in to DockerHub
+      - name: Log in to Docker Hub
         uses: docker/login-action@v2
         with:
           username: ${{ secrets.DOCKERHUB_USERNAME }}
           password: ${{ secrets.DOCKERHUB_TOKEN }}
 
       - name: Build services via docker-compose
-        run: docker-compose -f python-task/microservices-project/docker-compose.yml build
+        working-directory: python-task/microservices-project
+        run: docker-compose build user-service task-service gateway-service
 
       - name: Push user-service
+        working-directory: python-task/microservices-project
         run: |
           docker tag user-service ${{ secrets.DOCKERHUB_USERNAME }}/user-service:latest
           docker push ${{ secrets.DOCKERHUB_USERNAME }}/user-service:latest
 
       - name: Push task-service
+        working-directory: python-task/microservices-project
         run: |
           docker tag task-service ${{ secrets.DOCKERHUB_USERNAME }}/task-service:latest
           docker push ${{ secrets.DOCKERHUB_USERNAME }}/task-service:latest
 
       - name: Push gateway-service
+        working-directory: python-task/microservices-project
         run: |
           docker tag gateway-service ${{ secrets.DOCKERHUB_USERNAME }}/gateway-service:latest
           docker push ${{ secrets.DOCKERHUB_USERNAME }}/gateway-service:latest

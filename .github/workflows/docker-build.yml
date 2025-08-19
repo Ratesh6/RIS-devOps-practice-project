@@ -25,7 +25,7 @@ jobs:
         run: docker build -t microservices-project-user-service ./user-service
 
       - name: Build task-service image
-        run: docker build -t microservices-project-task-service -f ./task-service/Dockerfile .
+        run: docker build -t microservices-project-task-service -f task-service/Dockerfile task-service
 
 
       - name: Tag & push gateway-service image
